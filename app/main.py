@@ -2,5 +2,20 @@ from typing import Callable
 
 
 def cache(func: Callable) -> Callable:
-    # Write your code here
+    cash_dict = {}
+
+    def wrapper(*args, **kwargs):
+        key = (args, tuple(sorted(kwargs.items())))
+        if key in cash_dict:
+            print("Getting from cache")
+            return cash_dict[key]
+        else:
+            print("Calculating new result")
+            result = func(*args, **kwargs)
+            cash_dict[key] = result
+            return result
+
+    return wrapper
     pass
+
+
